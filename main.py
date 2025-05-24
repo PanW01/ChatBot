@@ -1,6 +1,8 @@
 from openai import OpenAI
 from context_loader import Context
 
+messages_history = []
+
 topics, responses = Context.load()
 instructions = "\n".join(
     f'- If the user says "{topic}" or something similar, respond with: "{response}"'
@@ -14,13 +16,14 @@ client = OpenAI(
 
 while True:
     prompt = str(input("User: "))
+    messages_history.append("User:" + prompt)
     response = client.chat.completions.create(
         model="gemini-2.5-flash-preview-05-20",
         messages=[
             {
                 "role": "system", 
-                "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 3 lines.
-                Follow these strict rules:{instructions}""",
+                "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 6 lines.
+                Follow these strict rules: {instructions},\n this is the chat: {"\n".join(messages_history)}""",
             },
             {
                 "role": "user", 
@@ -29,4 +32,5 @@ while True:
         ]
     )
     message = response.choices[0].message.content
+    messages_history.append("AI: " + message)
     print(f"Gemini: {message}")
