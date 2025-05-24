@@ -1,0 +1,32 @@
+from openai import OpenAI
+from context_loader import Context
+
+topics, responses = Context.load()
+instructions = "\n".join(
+    f'- If the user says "{topic}" or something similar, respond with: "{response}"'
+    for topic, response in zip(topics, responses)
+)
+
+client = OpenAI(
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+    api_key="AIzaSyDYbEY18C2ViZTZOr3ZAjKQujbF1X-9YyU",    
+)
+
+while True:
+    prompt = str(input("User: "))
+    response = client.chat.completions.create(
+        model="gemini-2.5-flash-preview-05-20",
+        messages=[
+            {
+                "role": "system", 
+                "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 3 lines.
+                Follow these strict rules:{instructions}""",
+            },
+            {
+                "role": "user", 
+                "content": f"{prompt}"
+            }
+        ]
+    )
+    message = response.choices[0].message.content
+    print(f"Gemini: {message}")
