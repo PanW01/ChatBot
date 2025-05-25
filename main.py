@@ -1,4 +1,4 @@
-from openai import OpenAI
+import openai
 from context_loader import Context
 import os
 
@@ -12,7 +12,7 @@ instructions = "\n".join(
     for topic, response in zip(topics, responses)
 )
 
-client = OpenAI(
+client = openai.OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
     api_key=API_KEY,    
 )
