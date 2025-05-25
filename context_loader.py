@@ -1,11 +1,17 @@
 import csv
+import chardet
 
 class Context:
     def load():
         user_inputs = []
         responses = []
-        
-        with open('context.csv', newline='') as csvfile:
+        def detect_encoding(file_path):
+            with open(file_path, 'rb') as f:
+                result = chardet.detect(f.read())
+                return result['encoding']
+
+        encoding = detect_encoding('context.csv')
+        with open('context.csv', newline='', encoding=encoding) as csvfile:
             spamreader = csv.reader(csvfile, quotechar='|')
             for row in spamreader:
                 for element in row:
