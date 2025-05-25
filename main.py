@@ -1,5 +1,8 @@
 from openai import OpenAI
 from context_loader import Context
+import os
+
+API_KEY = os.environ.get("API_KEY")
 
 messages_history = []
 
@@ -11,7 +14,7 @@ instructions = "\n".join(
 
 client = OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-    api_key="AIzaSyDYbEY18C2ViZTZOr3ZAjKQujbF1X-9YyU",    
+    api_key=API_KEY,    
 )
 
 def continue_chat(prompt: str):
