@@ -14,16 +14,16 @@ client = OpenAI(
     api_key="AIzaSyDYbEY18C2ViZTZOr3ZAjKQujbF1X-9YyU",    
 )
 
-while True:
-    prompt = str(input("User: "))
+def continue_chat(prompt: str):
     messages_history.append("User:" + prompt)
     response = client.chat.completions.create(
         model="gemini-2.5-flash-preview-05-20",
         messages=[
             {
                 "role": "system", 
-                "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 6 lines.
-                Follow these strict rules: {instructions},\n this is the chat: {"\n".join(messages_history)}""",
+                "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 100 words.
+                Follow these strict rules: {instructions}, Don't answer literally, but naturally \n if user ask for something that is not in the rules, answer freely,\n this is the chat: {"\n".join(messages_history)}. \n
+                You have to be kind, nice and polite with people. """,
             },
             {
                 "role": "user", 
@@ -33,4 +33,4 @@ while True:
     )
     message = response.choices[0].message.content
     messages_history.append("AI: " + message)
-    print(f"Gemini: {message}")
+    return message
