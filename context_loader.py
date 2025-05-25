@@ -12,7 +12,7 @@ class Context:
 
         encoding = detect_encoding('context.csv')
         with open('context.csv', newline='', encoding=encoding) as csvfile:
-            spamreader = csv.reader(csvfile, quotechar='|')
+            spamreader = csv.reader(csvfile, quotechar='"')
             for row in spamreader:
                 for element in row:
                     part1, part2 = element.split(";")
@@ -20,3 +20,5 @@ class Context:
                     responses.append(part2)
 
         return (user_inputs, responses)
+    
+Context.load()
