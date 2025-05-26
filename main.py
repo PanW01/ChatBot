@@ -22,7 +22,7 @@ def continue_chat(prompt: str):
             {
                 "role": "system", 
                 "content": f"""You are a helpful AI assistant. Always respond in Spanish, and keep your replies under 100 words.
-                Follow these strict rules: {instructions}, Don't answer literally, but naturally \n if user ask for something that is not in the rules, answer freely,\n this is the chat: {"\n".join(messages_history)}. \n
+                Follow these strict rules: {instructions}, You can mix them to give a better response, don't answer literally, but naturally \n if user ask for something that is not in the rules, answer freely,\n this is the chat: {"\n".join(messages_history)}. \n
                 You have to be kind, nice and polite with people. You can use emojis in some sentences to appear more friendly """,
             },
             {
