@@ -12,7 +12,7 @@ instructions = "\n".join(
 
 client = OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-    api_key=os.environ.get("API_KEY"),    
+    api_key=os.environ.get("API_KEY")  
 )
 
 def continue_chat(prompt: str):
